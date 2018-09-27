@@ -1,0 +1,20 @@
+html
+  head
+    title= title
+    link(rel="stylesheet" href="../css/base.css")
+  body
+    h3
+      = "Goto: "
+      a(href="../") Users
+    h2= "Update Contact Attributes"
+    form(method='POST' action='/submit-updateAttributes')
+      br
+      label(for='contactId') Contact Id:&nbsp;&nbsp;&nbsp;
+        input(type='text', placeholder='Contact Id' name='contactId')
+      br
+      br
+      label(for='flagForFollowUp') Flag for Follow Up?&nbsp;&nbsp;&nbsp;
+        input(type='checkbox', placeholder='false' name='flagForFollowUp')
+      br
+      br
+      button(type='submit') Update
