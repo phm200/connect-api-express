@@ -1,0 +1,13 @@
+html
+  head
+    title= title
+    link(rel="stylesheet" href="../css/base.css")
+  body
+    h2= "Details for " + user.Username
+    ul
+      li= "ARN: " + user.Arn
+      li= "First Name: " + user.IdentityInfo.FirstName
+      li= "Last Name: " + user.IdentityInfo.LastName
+      li= "Routing Profile Id: " + user.RoutingProfileId
+    br
+    a(href="../") #{"Back"}

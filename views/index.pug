@@ -1,0 +1,13 @@
+html
+  head
+    title= title
+    link(rel="stylesheet" href="css/base.css")
+  body
+    h3
+      = "Goto: "
+      a(href="updateAttributes") Update Attributes
+    h2= "Users in my Connect Instance (" + dataList.length + ")"
+    ul
+      each val in dataList
+        li
+          a(href="user/" + val.Id) #{val.Username}
