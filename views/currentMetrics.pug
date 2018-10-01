@@ -1,0 +1,25 @@
+html
+  head
+    title= title
+    link(rel="stylesheet" href="css/base.css")
+  body
+    h3
+      = "Goto: "
+      a(href="updateAttributes") Update Attributes
+    h3
+      = "Goto: "
+      a(href="../") Users
+    h2= "Current Queue Metrics in my Connect Instance"
+    i= "Last updated at " + new Date().toLocaleString()
+    br
+    br
+    ul
+      each queue in metricResults
+        li
+          b= "Queue " + queue.Dimensions.Queue.Id
+          br
+          each metric in queue.Collections
+            span= metric.Value + " " + metric.Metric.Name
+            br
+          br
+  script(src='/js/currentMetrics.js') 
