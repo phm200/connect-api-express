@@ -3,7 +3,11 @@ const app = express();
 const AWS = require("aws-sdk");
 require("express-async-errors");
 
-const connectInstanceId = "--put your connect instance id here--";
+const qMetrics = require("./qMetrics");
+const instanceConfig = require("./instanceConfig");
+
+const connectInstanceId = instanceConfig.connectInstanceId;
+const connectQArns = instanceConfig.connectQArns;
 
 var connectClient = new AWS.Connect({
   apiVersion: "2017-08-08",
@@ -77,6 +81,29 @@ app.post("/submit-updateAttributes", async (req, res) => {
 
   res.render("submittedUpdateAttributes", {
     title: "Contact Attributes Updated"
+  });
+});
+
+app.get("/currentMetrics", async (req, res) => {
+  var getCurrentMetricsParams = {
+    InstanceId: connectInstanceId,
+    Filters: {
+      Channels: ["VOICE"],
+      Queues: connectQArns
+    },
+    CurrentMetrics: qMetrics.metricsList,
+    Groupings: ["QUEUE"]
+  };
+
+  var getCurrentMetricsPromise = connectClient
+    .getCurrentMetricData(getCurrentMetricsParams)
+    .promise();
+  var getCurrentMetricsResult = await getCurrentMetricsPromise;
+  console.log("current metrics:", JSON.stringify(getCurrentMetricsResult));
+
+  res.render("currentMetrics", {
+    title: "Current Queue Metrics",
+    metricResults: getCurrentMetricsResult.MetricResults
   });
 });
 
